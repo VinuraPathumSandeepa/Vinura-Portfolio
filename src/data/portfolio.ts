@@ -38,7 +38,7 @@ export const projects: Project[] = [
     technologies: ['React', 'Flutter', 'ASP.NET Core (C#)', 'PostgreSQL', 'Gemini API'],
     repositoryUrl: null,
     demoUrl: 'https://gemora-marketplace-web.onrender.com',
-    apkUrl: '/downloads/GemoraAI.apk',
+    apkUrl: 'https://github.com/VinuraPathumSandeepa/Vinura-Portfolio/releases/download/gemora-android-1/GemoraAI.apk',
     caseStudyUrl: '/?case-study=gemora-ai',
     visual: 'gemora',
     featured: true,
