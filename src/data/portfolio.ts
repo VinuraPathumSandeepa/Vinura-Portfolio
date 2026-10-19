@@ -54,7 +54,7 @@ export const projects: Project[] = [
     ],
     technologies: ['React', 'Java', 'Spring Boot', 'REST APIs', 'JPA/Hibernate'],
     repositoryUrl: null,
-    demoUrl: null,
+    demoUrl: 'https://quickbite-food-delivery-system.vercel.app/',
     visual: 'food',
     wide: true,
   },
@@ -131,7 +131,7 @@ export const skillGroups = [
 ]
 
 export const socialLinks: SocialLink[] = [
-  { id: 'github', label: 'GitHub', url: null },
+  { id: 'github', label: 'GitHub', url: 'https://github.com/VinuraPathumSandeepa' },
   { id: 'linkedin', label: 'LinkedIn', url: null },
   { id: 'portfolio', label: 'Portfolio', url: null },
 ]
