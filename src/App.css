@@ -123,6 +123,7 @@
 .project-card--featured .project-visual { height: 100%; min-height: 465px; }
 .project-card--wide .project-visual { height: 100%; min-height: 380px; }
 .visual-note { position: absolute; z-index: 5; left: 24px; bottom: 18px; color: rgba(224, 242, 230, .58); font-size: 9px; font-weight: 650; letter-spacing: .16em; }
+.project-visual:not(.project-visual--real) .visual-note { left: 16px; bottom: 14px; padding: 7px 9px; border: 1px solid rgba(133, 221, 198, .3); border-radius: 2px; color: #deeee7; background: rgba(8, 25, 31, .9); }
 .project-visual--gemora { background: radial-gradient(circle at 74% 30%, #357679 0, transparent 36%), linear-gradient(130deg, #183f43, #0a232e 70%); }
 .project-visual--gemora::before, .project-visual--food::before, .project-visual--gym::before, .project-visual--airline::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px); background-size: 35px 35px; mask-image: linear-gradient(to right, transparent, black 30%, black 70%, transparent); }
 .gemora-window { position: relative; width: 80%; max-width: 550px; height: 73%; border: 1px solid rgba(245, 239, 210, .25); border-radius: 7px; background: #f0eee7; box-shadow: 0 28px 60px rgba(0, 13, 17, .38); transform: rotate(-3deg) translate(10px, -2px); }
