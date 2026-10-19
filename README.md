@@ -2,6 +2,8 @@
 
 A responsive personal portfolio built with React, TypeScript, Vite, Tailwind CSS v4, Motion for React, and Lucide React.
 
+Live website: [vinura-portfolio-lyart.vercel.app](https://vinura-portfolio-lyart.vercel.app/)
+
 ## Run locally
 
 ```bash
