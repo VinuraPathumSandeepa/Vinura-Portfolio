@@ -123,11 +123,62 @@ export const gemoraScreenshots = [
   { id: 'mobile-splash', src: '/images/projects/gemora/mobile-splash.png', title: 'Splash screen', caption: 'The Flutter app’s opening screen.', alt: 'GemoraAI Flutter splash screen shown inside its captured Android device frame', device: 'mobile', group: 'mobile' },
 ] satisfies GemoraScreenshot[]
 
-export const skillGroups = [
-  { title: 'Frontend', skills: ['React', 'TypeScript', 'JavaScript', 'HTML5', 'CSS3'] },
-  { title: 'Backend & APIs', skills: ['Java', 'Spring Boot', 'ASP.NET Core', 'C#', 'REST APIs', 'JPA/Hibernate'] },
-  { title: 'Mobile & Data', skills: ['Flutter', 'PostgreSQL', 'Gemini API'] },
-  { title: 'Workflow', skills: ['Git', 'GitHub', 'API Integration'] },
+export type TechnologyIconId =
+  | 'react' | 'typescript' | 'javascript' | 'html5' | 'css3'
+  | 'java' | 'springboot' | 'dotnet' | 'rest' | 'csharp' | 'hibernate' | 'gemini' | 'integration'
+  | 'flutter' | 'postgresql' | 'mysql' | 'git' | 'github'
+
+export type Technology = {
+  name: string
+  icon: TechnologyIconId
+  color: string
+}
+
+export type SkillGroup = {
+  id: 'frontend' | 'backend' | 'mobile' | 'databases' | 'tools'
+  title: string
+  technologies: Technology[]
+}
+
+export const skillGroups: SkillGroup[] = [
+  {
+    id: 'frontend', title: 'Frontend', technologies: [
+      { name: 'React', icon: 'react', color: '#61dafb' },
+      { name: 'TypeScript', icon: 'typescript', color: '#5a9bea' },
+      { name: 'JavaScript', icon: 'javascript', color: '#f7df1e' },
+      { name: 'HTML5', icon: 'html5', color: '#e86b40' },
+      { name: 'CSS3', icon: 'css3', color: '#4d9ae8' },
+    ],
+  },
+  {
+    id: 'backend', title: 'Backend', technologies: [
+      { name: 'Java', icon: 'java', color: '#e77b4b' },
+      { name: 'Spring Boot', icon: 'springboot', color: '#8bca56' },
+      { name: 'ASP.NET Core', icon: 'dotnet', color: '#a18cf3' },
+      { name: 'REST APIs', icon: 'rest', color: '#85ddc6' },
+      { name: 'C#', icon: 'csharp', color: '#b68be8' },
+      { name: 'JPA/Hibernate', icon: 'hibernate', color: '#c9b982' },
+      { name: 'Gemini API', icon: 'gemini', color: '#a5b9f9' },
+      { name: 'API Integration', icon: 'integration', color: '#85ddc6' },
+    ],
+  },
+  {
+    id: 'mobile', title: 'Mobile', technologies: [
+      { name: 'Flutter', icon: 'flutter', color: '#67c8f6' },
+    ],
+  },
+  {
+    id: 'databases', title: 'Databases', technologies: [
+      { name: 'PostgreSQL', icon: 'postgresql', color: '#81a9e8' },
+      { name: 'MySQL', icon: 'mysql', color: '#76adce' },
+    ],
+  },
+  {
+    id: 'tools', title: 'Developer Tools', technologies: [
+      { name: 'Git', icon: 'git', color: '#f27655' },
+      { name: 'GitHub', icon: 'github', color: '#eef4ef' },
+    ],
+  },
 ]
 
 export const socialLinks: SocialLink[] = [

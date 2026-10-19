@@ -6,7 +6,8 @@ import { Navbar } from './components/Navbar'
 import { ProjectCard } from './components/ProjectCard'
 import { Reveal } from './components/Reveal'
 import { SectionHeading } from './components/SectionHeading'
-import { projects, resumeUrl, skillGroups, socialLinks, type SocialLink } from './data/portfolio'
+import { TechStack } from './components/TechStack'
+import { projects, resumeUrl, socialLinks, type SocialLink } from './data/portfolio'
 import './App.css'
 
 const socialIcons = {
@@ -105,16 +106,8 @@ function App() {
 
         <section className="section section--skills" id="skills" aria-labelledby="skills-title">
           <div className="section-shell">
-            <Reveal><SectionHeading number="02" label="Technical skills" title="Tools of the trade." id="skills-title" description="A growing toolkit for building across the stack." /></Reveal>
-            <div className="skills-grid">
-              {skillGroups.map((group, index) => (
-                <Reveal className="skill-card" delay={index * 0.07} key={group.title}>
-                  <div className="skill-card-top"><span className="skill-index">0{index + 1}</span><span className="skill-plus" aria-hidden="true">↗</span></div>
-                  <h3>{group.title}</h3>
-                  <ul aria-label={`${group.title} skills`}>{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
-                </Reveal>
-              ))}
-            </div>
+            <Reveal><SectionHeading number="02" label="Technical skills" title="What I work with." id="skills-title" description="The languages, frameworks, platforms, and tools I use in project work." /></Reveal>
+            <TechStack />
           </div>
         </section>
 
