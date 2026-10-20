@@ -1,6 +1,8 @@
 import { ArrowRight, ArrowUpRight, Download } from 'lucide-react'
+import { motion, useReducedMotion } from 'motion/react'
 import type { Project } from '../data/portfolio'
 import { gemoraScreenshots } from '../data/portfolio'
+import { motionDuration, motionEase } from '../motion'
 import { ProjectVisual } from './ProjectVisual'
 import { useGemoraScreenshots } from './useGemoraScreenshots'
 
@@ -18,9 +20,19 @@ function FeaturedVisual() {
 }
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
+  const reduceMotion = useReducedMotion()
+
   return (
     <article className={`project-card ${project.featured ? 'project-card--featured' : ''} ${project.wide ? 'project-card--wide' : ''}`}>
-      <div className="project-visual-wrap">{project.id === 'gemora-ai' ? <FeaturedVisual /> : <ProjectVisual variant={project.visual} />}</div>
+      <motion.div
+        className="project-visual-wrap"
+        initial={reduceMotion ? false : { opacity: 0.84, scale: 1.025 }}
+        whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
+        viewport={{ once: true, amount: 0.16 }}
+        transition={{ duration: motionDuration.section, delay: 0.08, ease: motionEase }}
+      >
+        {project.id === 'gemora-ai' ? <FeaturedVisual /> : <ProjectVisual variant={project.visual} />}
+      </motion.div>
       <div className="project-content">
         <div className="project-topline">
           <span>0{index + 1} / {project.featured ? 'FEATURED PROJECT' : 'PROJECT'}</span>

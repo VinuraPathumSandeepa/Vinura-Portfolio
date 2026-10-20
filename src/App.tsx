@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
-import { ArrowDown, ArrowUpRight, BriefcaseBusiness, Code2, Download } from 'lucide-react'
+import { ArrowUpRight, BriefcaseBusiness, Code2, Download } from 'lucide-react'
 import { ContactLead } from './components/ContactLead'
-import { HeroPortrait } from './components/HeroPortrait'
-import { HeroIntro } from './components/HeroIntro'
+import { HeroScene } from './components/HeroScene'
 import { GemoraCaseStudy } from './components/GemoraCaseStudy'
 import { Navbar } from './components/Navbar'
 import { ProjectCard } from './components/ProjectCard'
@@ -70,12 +69,7 @@ function App() {
       <Navbar />
 
       <main id="main" className="page-enter">
-        <section className="hero section-shell" aria-labelledby="hero-title">
-          <HeroIntro />
-          <HeroPortrait />
-
-          <a className="scroll-cue" href="#about" aria-label="Scroll to about section"><span>Scroll to explore</span><ArrowDown size={16} aria-hidden="true" /></a>
-        </section>
+        <HeroScene />
 
         <section className="section section--about" id="about" aria-labelledby="about-title">
           <div className="section-shell about-grid">
