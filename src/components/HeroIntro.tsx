@@ -3,7 +3,14 @@ import { motion, useReducedMotion } from 'motion/react'
 import type { MotionValue } from 'motion/react'
 import { motionDuration, motionEase } from '../motion'
 
-export function HeroIntro({ scrollY }: { scrollY?: MotionValue<number> }) {
+type HeroIntroProps = {
+  sceneX?: MotionValue<number>
+  sceneY?: MotionValue<number>
+  sceneOpacity?: MotionValue<number>
+  sceneInactive?: boolean
+}
+
+export function HeroIntro({ sceneX, sceneY, sceneOpacity, sceneInactive = false }: HeroIntroProps) {
   const reduceMotion = useReducedMotion()
   const fadeUp = (delay: number) => reduceMotion ? {} : {
     initial: { opacity: 0, y: 12 },
@@ -17,7 +24,7 @@ export function HeroIntro({ scrollY }: { scrollY?: MotionValue<number> }) {
   }
 
   return (
-    <motion.div className="hero-copy" style={scrollY ? { y: scrollY } : undefined}>
+    <motion.div className="hero-copy" style={sceneX && sceneY && sceneOpacity ? { x: sceneX, y: sceneY, opacity: sceneOpacity } : undefined}>
       <motion.p className="eyebrow" {...fadeUp(0.04)}><span className="eyebrow-line" /> Undergraduate Software Engineer</motion.p>
       <h1 id="hero-title" aria-label="Practical software, from backend to interface.">
         <span className="hero-line"><motion.span {...revealLine(0.13)}>Practical software,</motion.span></span>
@@ -30,8 +37,8 @@ export function HeroIntro({ scrollY }: { scrollY?: MotionValue<number> }) {
         development, REST APIs, databases, and full-stack applications.
       </motion.p>
       <div className="hero-actions">
-        <motion.a className="button button--primary" href="#projects" {...fadeUp(0.57)}>Explore my work <ArrowUpRight size={18} aria-hidden="true" /></motion.a>
-        <motion.a className="button button--text" href="mailto:vpsvinura@gmail.com" {...fadeUp(0.64)}>Get in touch <ArrowRight size={18} aria-hidden="true" /></motion.a>
+        <motion.a className="button button--primary" href="#projects" tabIndex={sceneInactive ? -1 : undefined} {...fadeUp(0.57)}>Explore my work <ArrowUpRight size={18} aria-hidden="true" /></motion.a>
+        <motion.a className="button button--text" href="mailto:vpsvinura@gmail.com" tabIndex={sceneInactive ? -1 : undefined} {...fadeUp(0.64)}>Get in touch <ArrowRight size={18} aria-hidden="true" /></motion.a>
       </div>
     </motion.div>
   )

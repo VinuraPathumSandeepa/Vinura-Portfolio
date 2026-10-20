@@ -7,12 +7,13 @@ import { motionDuration, motionEase } from '../motion'
 const portraitUrl = '/images/profile.jpg'
 
 type HeroPortraitProps = {
-  scrollY?: MotionValue<number>
-  scrollScale?: MotionValue<number>
+  sceneX?: MotionValue<string>
+  sceneY?: MotionValue<string>
+  sceneScale?: MotionValue<number>
   pointerEnabled?: boolean
 }
 
-export function HeroPortrait({ scrollY, scrollScale, pointerEnabled = false }: HeroPortraitProps) {
+export function HeroPortrait({ sceneX, sceneY, sceneScale, pointerEnabled = false }: HeroPortraitProps) {
   const [showFallback, setShowFallback] = useState(false)
   const reduceMotion = useReducedMotion()
   const pointerBounds = useRef<DOMRect | null>(null)
@@ -51,7 +52,7 @@ export function HeroPortrait({ scrollY, scrollScale, pointerEnabled = false }: H
   return (
     <motion.div
       className="hero-art"
-      style={scrollY && scrollScale ? { y: scrollY, scale: scrollScale } : undefined}
+      style={sceneX && sceneY && sceneScale ? { x: sceneX, y: sceneY, scale: sceneScale } : undefined}
       onPointerEnter={handlePointerEnter}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
