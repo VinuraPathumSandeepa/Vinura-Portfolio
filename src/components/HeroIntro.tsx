@@ -7,10 +7,11 @@ type HeroIntroProps = {
   sceneX?: MotionValue<number>
   sceneY?: MotionValue<number>
   sceneOpacity?: MotionValue<number>
+  headlineClip?: MotionValue<string>
   sceneInactive?: boolean
 }
 
-export function HeroIntro({ sceneX, sceneY, sceneOpacity, sceneInactive = false }: HeroIntroProps) {
+export function HeroIntro({ sceneX, sceneY, sceneOpacity, headlineClip, sceneInactive = false }: HeroIntroProps) {
   const reduceMotion = useReducedMotion()
   const fadeUp = (delay: number) => reduceMotion ? {} : {
     initial: { opacity: 0, y: 12 },
@@ -26,11 +27,11 @@ export function HeroIntro({ sceneX, sceneY, sceneOpacity, sceneInactive = false 
   return (
     <motion.div className="hero-copy" style={sceneX && sceneY && sceneOpacity ? { x: sceneX, y: sceneY, opacity: sceneOpacity } : undefined}>
       <motion.p className="eyebrow" {...fadeUp(0.04)}><span className="eyebrow-line" /> Undergraduate Software Engineer</motion.p>
-      <h1 id="hero-title" aria-label="Practical software, from backend to interface.">
+      <motion.h1 id="hero-title" aria-label="Practical software, from backend to interface." style={headlineClip ? { clipPath: headlineClip } : undefined}>
         <span className="hero-line"><motion.span {...revealLine(0.13)}>Practical software,</motion.span></span>
         <span className="hero-line"><motion.span {...revealLine(0.22)}>from backend to</motion.span></span>
         <span className="hero-line"><motion.em {...revealLine(0.31)}>interface.</motion.em></span>
-      </h1>
+      </motion.h1>
       <motion.p className="hero-intro" {...fadeUp(0.45)}>
         I’m Vinura Pathum Sandeepa, an Undergraduate Software Engineer pursuing my degree
         at the Sri Lanka Institute of Information Technology (SLIIT). My project work spans backend

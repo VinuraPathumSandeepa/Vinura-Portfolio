@@ -95,11 +95,12 @@
 .hero-workspace-coordinate { position: absolute; right: 1%; bottom: 7%; color: #a9c9c0; font-size: 9px; letter-spacing: .24em; writing-mode: vertical-rl; }
 
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
-  .hero-track--cinematic { height: 225svh; }
+  .hero-track--cinematic { height: 240svh; }
   .hero-track--cinematic .hero-stage { position: sticky; top: var(--header-height); height: calc(100svh - var(--header-height)); min-height: 0; padding-block: clamp(28px, 4vh, 54px) 58px; }
   .hero-track--cinematic .hero-art { width: min(100%, calc((100svh - 210px) * .84)); }
   .hero-track--cinematic .scroll-cue { z-index: 5; bottom: 23px; }
-  .hero-track--cinematic + .section--about { z-index: 5; margin-top: -65svh; box-shadow: 0 -24px 70px rgba(4, 16, 21, .2); }
+  .hero-track--cinematic + .section--about { z-index: 5; margin-top: -65svh; border-top-color: transparent; box-shadow: 0 -24px 70px rgba(4, 16, 21, .12); }
+  .hero-track--cinematic + .section--about::before { content: ""; position: absolute; right: 0; bottom: 100%; left: 0; height: min(14svh, 140px); pointer-events: none; background: linear-gradient(to bottom, transparent, #0b1c24); }
 }
 
 @media (min-width: 761px) and (max-width: 1023px) {

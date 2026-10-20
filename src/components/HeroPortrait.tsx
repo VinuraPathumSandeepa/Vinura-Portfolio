@@ -10,10 +10,11 @@ type HeroPortraitProps = {
   sceneX?: MotionValue<string>
   sceneY?: MotionValue<string>
   sceneScale?: MotionValue<number>
+  sceneOpacity?: MotionValue<number>
   pointerEnabled?: boolean
 }
 
-export function HeroPortrait({ sceneX, sceneY, sceneScale, pointerEnabled = false }: HeroPortraitProps) {
+export function HeroPortrait({ sceneX, sceneY, sceneScale, sceneOpacity, pointerEnabled = false }: HeroPortraitProps) {
   const [showFallback, setShowFallback] = useState(false)
   const reduceMotion = useReducedMotion()
   const pointerBounds = useRef<DOMRect | null>(null)
@@ -52,7 +53,7 @@ export function HeroPortrait({ sceneX, sceneY, sceneScale, pointerEnabled = fals
   return (
     <motion.div
       className="hero-art"
-      style={sceneX && sceneY && sceneScale ? { x: sceneX, y: sceneY, scale: sceneScale } : undefined}
+      style={sceneX && sceneY && sceneScale && sceneOpacity ? { x: sceneX, y: sceneY, scale: sceneScale, opacity: sceneOpacity } : undefined}
       onPointerEnter={handlePointerEnter}
       onPointerMove={handlePointerMove}
       onPointerLeave={handlePointerLeave}
