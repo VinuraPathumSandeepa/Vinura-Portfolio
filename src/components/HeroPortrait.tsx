@@ -1,13 +1,20 @@
 import { useState } from 'react'
+import { motion, useReducedMotion } from 'motion/react'
 import portraitPlaceholder from '../assets/portrait-placeholder.svg'
 
 const portraitUrl = '/images/profile.jpg'
 
 export function HeroPortrait() {
   const [showFallback, setShowFallback] = useState(false)
+  const reduceMotion = useReducedMotion()
 
   return (
-    <>
+    <motion.div
+      className="hero-art"
+      initial={reduceMotion ? false : { opacity: 0, scale: 0.975, y: 12 }}
+      animate={reduceMotion ? undefined : { opacity: 1, scale: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className={`portrait-frame ${showFallback ? '' : 'portrait-frame--photo'}`}>
         <div className="portrait-corner portrait-corner--top" aria-hidden="true" />
         <img
@@ -26,6 +33,6 @@ export function HeroPortrait() {
         <span>{showFallback ? 'Portrait placeholder' : 'Vinura Pathum Sandeepa'}</span>
         <span>Undergraduate Software Engineer / SLIIT</span>
       </div>
-    </>
+    </motion.div>
   )
 }

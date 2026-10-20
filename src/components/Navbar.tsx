@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 
 const navLinks = [
@@ -10,7 +10,21 @@ const navLinks = [
 
 export function Navbar({ fromCaseStudy = false }: { fromCaseStudy?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState<string | null>(null)
   const homePrefix = fromCaseStudy ? '/' : ''
+
+  useEffect(() => {
+    if (fromCaseStudy) return
+
+    const targets = [document.querySelector('.hero'), ...navLinks.map((link) => document.querySelector(link.href)), document.getElementById('contact')].filter((target): target is Element => Boolean(target))
+    const observer = new IntersectionObserver((entries) => {
+      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+      if (visible[0]) setActiveSection(visible[0].target.id || null)
+    }, { rootMargin: '-18% 0px -62% 0px' })
+
+    targets.forEach((target) => observer.observe(target))
+    return () => observer.disconnect()
+  }, [fromCaseStudy])
 
   return (
     <header className="site-header">
@@ -27,8 +41,8 @@ export function Navbar({ fromCaseStudy = false }: { fromCaseStudy?: boolean }) {
           {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
         </button>
         <div className={`nav-links ${menuOpen ? 'nav-links--open' : ''}`} id="main-menu">
-          {navLinks.map((link) => <a key={link.href} href={`${homePrefix}${link.href}`} onClick={() => setMenuOpen(false)}>{link.label}</a>)}
-          <a className="nav-contact" href={`${homePrefix}#contact`} onClick={() => setMenuOpen(false)}>Let’s talk <ArrowUpRight size={16} aria-hidden="true" /></a>
+          {navLinks.map((link) => <a key={link.href} href={`${homePrefix}${link.href}`} aria-current={activeSection === link.href.slice(1) ? 'location' : undefined} onClick={() => { setMenuOpen(false); setActiveSection(link.href.slice(1)) }}>{link.label}</a>)}
+          <a className="nav-contact" href={`${homePrefix}#contact`} aria-current={activeSection === 'contact' ? 'location' : undefined} onClick={() => { setMenuOpen(false); setActiveSection('contact') }}>Let’s talk <ArrowUpRight size={16} aria-hidden="true" /></a>
         </div>
       </nav>
     </header>

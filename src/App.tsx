@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
-import { ArrowDown, ArrowRight, ArrowUpRight, BriefcaseBusiness, Code2, Download, Mail } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, BriefcaseBusiness, Code2, Download, Mail } from 'lucide-react'
 import { HeroPortrait } from './components/HeroPortrait'
+import { HeroIntro } from './components/HeroIntro'
 import { GemoraCaseStudy } from './components/GemoraCaseStudy'
 import { Navbar } from './components/Navbar'
 import { ProjectCard } from './components/ProjectCard'
@@ -56,7 +57,7 @@ function App() {
       <div className="site-shell" id="top">
         <a className="skip-link" href="#main">Skip to content</a>
         <Navbar fromCaseStudy />
-        <main id="main"><GemoraCaseStudy /></main>
+        <main id="main" className="page-enter"><GemoraCaseStudy /></main>
         <Footer fromCaseStudy />
       </div>
     )
@@ -67,27 +68,10 @@ function App() {
       <a className="skip-link" href="#main">Skip to content</a>
       <Navbar />
 
-      <main id="main">
+      <main id="main" className="page-enter">
         <section className="hero section-shell" aria-labelledby="hero-title">
-          <div className="hero-copy">
-            <Reveal>
-              <p className="eyebrow"><span className="eyebrow-line" /> Undergraduate Software Engineer</p>
-              <h1 id="hero-title">Practical software, from backend to <em>interface.</em></h1>
-              <p className="hero-intro">
-                I’m Vinura Pathum Sandeepa, an Undergraduate Software Engineer pursuing my degree
-                at the Sri Lanka Institute of Information Technology (SLIIT). My project work spans backend
-                development, REST APIs, databases, and full-stack applications.
-              </p>
-              <div className="hero-actions">
-                <a className="button button--primary" href="#projects">Explore my work <ArrowUpRight size={18} aria-hidden="true" /></a>
-                <a className="button button--text" href="mailto:vpsvinura@gmail.com">Get in touch <ArrowRight size={18} aria-hidden="true" /></a>
-              </div>
-            </Reveal>
-          </div>
-
-          <Reveal className="hero-art" delay={0.12}>
-            <HeroPortrait />
-          </Reveal>
+          <HeroIntro />
+          <HeroPortrait />
 
           <a className="scroll-cue" href="#about" aria-label="Scroll to about section"><span>Scroll to explore</span><ArrowDown size={16} aria-hidden="true" /></a>
         </section>
@@ -114,7 +98,7 @@ function App() {
         <section className="section section--projects" id="projects" aria-labelledby="projects-title">
           <div className="section-shell">
             <Reveal><div className="projects-heading"><SectionHeading number="03" label="Selected work" title="Ideas, made tangible." id="projects-title" description="Individual and group projects, with my role made clear in each." /><span className="projects-count">SELECTED PROJECTS / {String(projects.length).padStart(2, '0')}</span></div></Reveal>
-            <div className="projects-list">{projects.map((project, index) => <Reveal className={project.wide ? 'project-grid-item--wide' : undefined} key={project.id} delay={0.06}><ProjectCard project={project} index={index} /></Reveal>)}</div>
+            <div className="projects-list">{projects.map((project, index) => <Reveal className={project.wide ? 'project-grid-item--wide' : undefined} key={project.id} delay={0.04 + index * 0.05}><ProjectCard project={project} index={index} /></Reveal>)}</div>
           </div>
         </section>
 
