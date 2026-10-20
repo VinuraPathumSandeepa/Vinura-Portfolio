@@ -5,6 +5,7 @@ import { FaCss3Alt, FaJava } from 'react-icons/fa'
 import { SiDotnet, SiFlutter, SiGit, SiGithub, SiGooglegemini, SiHibernate, SiHtml5, SiJavascript, SiMysql, SiPostgresql, SiReact, SiSpringboot, SiTypescript } from 'react-icons/si'
 import { TbBrandCSharp } from 'react-icons/tb'
 import { skillGroups, type Technology, type TechnologyIconId } from '../data/portfolio'
+import { motionDuration, motionEase } from '../motion'
 import { Reveal } from './Reveal'
 
 const technologyIcons = {
@@ -36,7 +37,7 @@ function TechnologyCard({ technology, index, reduceMotion }: { technology: Techn
       className="technology-card"
       style={{ '--technology-color': technology.color } as CSSProperties}
       initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, transition: { duration: 0.5, delay: index * 0.055, ease: [0.22, 1, 0.36, 1] } }}
+      whileInView={reduceMotion ? undefined : { opacity: 1, y: 0, transition: { duration: motionDuration.detail, delay: index * 0.055, ease: motionEase } }}
       whileHover={reduceMotion ? undefined : { y: -4, transition: { duration: 0.22 } }}
       viewport={{ once: true, amount: 0.2 }}
     >

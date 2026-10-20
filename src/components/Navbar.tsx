@@ -17,9 +17,14 @@ export function Navbar({ fromCaseStudy = false }: { fromCaseStudy?: boolean }) {
     if (fromCaseStudy) return
 
     const targets = [document.querySelector('.hero'), ...navLinks.map((link) => document.querySelector(link.href)), document.getElementById('contact')].filter((target): target is Element => Boolean(target))
+    const intersecting = new Set<Element>()
     const observer = new IntersectionObserver((entries) => {
-      const visible = entries.filter((entry) => entry.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
-      if (visible[0]) setActiveSection(visible[0].target.id || null)
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) intersecting.add(entry.target)
+        else intersecting.delete(entry.target)
+      })
+      const current = [...intersecting].sort((a, b) => b.getBoundingClientRect().top - a.getBoundingClientRect().top)[0]
+      if (current) setActiveSection(current.id || null)
     }, { rootMargin: '-18% 0px -62% 0px' })
 
     targets.forEach((target) => observer.observe(target))

@@ -1,19 +1,18 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
-
-const ease = [0.22, 1, 0.36, 1] as const
+import { motionDuration, motionEase } from '../motion'
 
 export function HeroIntro() {
   const reduceMotion = useReducedMotion()
   const fadeUp = (delay: number) => reduceMotion ? {} : {
     initial: { opacity: 0, y: 12 },
     animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.5, delay, ease },
+    transition: { duration: motionDuration.detail, delay, ease: motionEase },
   }
   const revealLine = (delay: number) => reduceMotion ? {} : {
     initial: { opacity: 0, y: '105%' },
     animate: { opacity: 1, y: '0%' },
-    transition: { duration: 0.72, delay, ease },
+    transition: { duration: motionDuration.heroLine, delay, ease: motionEase },
   }
 
   return (

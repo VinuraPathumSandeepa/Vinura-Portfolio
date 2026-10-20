@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
-import { ArrowDown, ArrowUpRight, BriefcaseBusiness, Code2, Download, Mail } from 'lucide-react'
+import { ArrowDown, ArrowUpRight, BriefcaseBusiness, Code2, Download } from 'lucide-react'
+import { ContactLead } from './components/ContactLead'
 import { HeroPortrait } from './components/HeroPortrait'
 import { HeroIntro } from './components/HeroIntro'
 import { GemoraCaseStudy } from './components/GemoraCaseStudy'
@@ -78,7 +79,7 @@ function App() {
 
         <section className="section section--about" id="about" aria-labelledby="about-title">
           <div className="section-shell about-grid">
-            <Reveal><SectionHeading number="01" label="About me" title="Curiosity meets craft." id="about-title" /></Reveal>
+            <Reveal variant="heading"><SectionHeading number="01" label="About me" title="Curiosity meets craft." id="about-title" /></Reveal>
             <Reveal className="about-content" delay={0.1}>
               <p className="about-lead">I enjoy turning ideas into useful, considered software.</p>
               <p>I’m pursuing a BSc (Hons) in Information Technology (Software Engineering) at the Sri Lanka Institute of Information Technology (SLIIT). My project experience covers backend development, REST APIs, databases, and full-stack applications.</p>
@@ -90,21 +91,21 @@ function App() {
 
         <section className="section section--skills" id="skills" aria-labelledby="skills-title">
           <div className="section-shell">
-            <Reveal><SectionHeading number="02" label="Technical skills" title="What I work with." id="skills-title" description="The languages, frameworks, platforms, and tools I use in project work." /></Reveal>
+            <Reveal variant="heading"><SectionHeading number="02" label="Technical skills" title="What I work with." id="skills-title" description="The languages, frameworks, platforms, and tools I use in project work." /></Reveal>
             <TechStack />
           </div>
         </section>
 
         <section className="section section--projects" id="projects" aria-labelledby="projects-title">
           <div className="section-shell">
-            <Reveal><div className="projects-heading"><SectionHeading number="03" label="Selected work" title="Ideas, made tangible." id="projects-title" description="Individual and group projects, with my role made clear in each." /><span className="projects-count">SELECTED PROJECTS / {String(projects.length).padStart(2, '0')}</span></div></Reveal>
+            <Reveal variant="heading"><div className="projects-heading"><SectionHeading number="03" label="Selected work" title="Ideas, made tangible." id="projects-title" description="Individual and group projects, with my role made clear in each." /><span className="projects-count">SELECTED PROJECTS / {String(projects.length).padStart(2, '0')}</span></div></Reveal>
             <div className="projects-list">{projects.map((project, index) => <Reveal className={project.wide ? 'project-grid-item--wide' : undefined} key={project.id} delay={0.04 + index * 0.05}><ProjectCard project={project} index={index} /></Reveal>)}</div>
           </div>
         </section>
 
         <section className="section section--education" id="education" aria-labelledby="education-title">
           <div className="section-shell education-grid">
-            <Reveal><SectionHeading number="04" label="Education" title="Where I’m growing." id="education-title" /></Reveal>
+            <Reveal variant="heading"><SectionHeading number="04" label="Education" title="Where I’m growing." id="education-title" /></Reveal>
             <Reveal className="education-card" delay={0.1}>
               <div className="education-mark" aria-hidden="true">S</div>
               <div className="education-copy">
@@ -119,12 +120,7 @@ function App() {
 
         <section className="section section--contact" id="contact" aria-labelledby="contact-title">
           <div className="section-shell contact-grid">
-            <Reveal>
-              <p className="section-kicker"><span>05</span> / LET’S CONNECT</p>
-              <h2 id="contact-title">Have something <em>in mind?</em></h2>
-              <p className="contact-intro">I’d be glad to hear about opportunities, ideas, or a project worth discussing.</p>
-              <a className="contact-email" href="mailto:vpsvinura@gmail.com"><Mail size={22} aria-hidden="true" /> vpsvinura@gmail.com <ArrowUpRight size={20} aria-hidden="true" /></a>
-            </Reveal>
+            <ContactLead />
             <Reveal className="contact-aside" delay={0.12}>
               {hasSocialLinks && <><p className="aside-label">FIND ME ONLINE</p><div className="social-list">{socialLinks.map((social) => <SocialItem social={social} key={social.id} />)}</div></>}
               <div className={`resume-block ${hasSocialLinks ? '' : 'resume-block--solo'}`}>
