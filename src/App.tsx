@@ -119,7 +119,7 @@ function App() {
               {hasSocialLinks && <><p className="aside-label">FIND ME ONLINE</p><div className="social-list">{socialLinks.map((social) => <SocialItem social={social} key={social.id} />)}</div></>}
               <div className={`resume-block ${hasSocialLinks ? '' : 'resume-block--solo'}`}>
                 <p className="aside-label">RÉSUMÉ</p>
-                {resumeUrl ? <a className="resume-button resume-button--active" href={resumeUrl} download="Vinura_Pathum_Sandeepa_Resume.pdf"><Download size={18} aria-hidden="true" /> Download résumé</a> : <button className="resume-button" type="button" disabled title="Add your resume PDF to enable this download"><Download size={18} aria-hidden="true" /> Download résumé</button>}
+                {resumeUrl ? <a className="resume-button resume-button--active" href={resumeUrl} download="Vinura_Pathum_Sandeepa_Resume.pdf" aria-label="Download CV"><Download size={18} aria-hidden="true" /> Download CV</a> : <button className="resume-button" type="button" disabled title="Add your resume PDF to enable this download" aria-label="Download CV"><Download size={18} aria-hidden="true" /> Download CV</button>}
                 {!resumeUrl && <p>Available once a résumé PDF is added.</p>}
               </div>
             </Reveal>
