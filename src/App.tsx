@@ -85,7 +85,6 @@ function App() {
 
         <section className="section section--skills" id="skills" aria-labelledby="skills-title">
           <div className="section-shell">
-            <Reveal variant="heading"><SectionHeading number="02" label="Technical skills" title="What I work with." id="skills-title" description="The languages, frameworks, platforms, and tools I use in project work." /></Reveal>
             <TechStack />
           </div>
         </section>
