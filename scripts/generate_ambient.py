@@ -35,33 +35,38 @@ def frame(number: int) -> np.ndarray:
     # Every movement is periodic over exactly ten seconds, including the
     # curved light field. The final frame therefore flows into frame zero.
     phase = 2 * math.pi * number / FRAMES
-    drift_x = X + 0.018 * np.sin(2.7 * Y + phase)
-    drift_y = Y + 0.015 * np.cos(3.1 * X - phase)
+    drift_x = X + 0.026 * np.sin(2.7 * Y + phase)
+    drift_y = Y + 0.022 * np.cos(3.1 * X - phase)
 
-    low_cloud = ellipse(0.16 + 0.045 * math.sin(phase), 0.74 + 0.045 * math.cos(phase), 0.31, 0.39, drift_x, drift_y)
-    high_cloud = ellipse(0.82 + 0.05 * math.cos(phase + 0.6), 0.29 + 0.055 * math.sin(phase + 0.6), 0.34, 0.35, drift_x, drift_y)
-    mid_cloud = ellipse(0.53 + 0.045 * math.sin(phase + 2.1), 0.49, 0.33, 0.47, drift_x, drift_y)
-    current = np.exp(-((Y - (0.66 + 0.035 * np.sin(4.2 * X + phase))) / 0.22) ** 2) * ellipse(0.5, 0.65, 0.5, 0.4)
+    # Broad light fields cross the stage on separate paths. Their changing
+    # centers make the motion legible even beneath the site's dark overlay.
+    low_cloud = ellipse(0.16 + 0.13 * math.sin(phase), 0.76 + 0.08 * math.cos(phase), 0.30, 0.38, drift_x, drift_y)
+    high_cloud = ellipse(0.81 + 0.12 * math.cos(phase + 0.6), 0.28 + 0.085 * math.sin(phase + 0.6), 0.31, 0.33, drift_x, drift_y)
+    mid_cloud = ellipse(0.52 + 0.105 * math.sin(phase + 2.1), 0.50 + 0.06 * math.cos(phase + 2.1), 0.30, 0.44, drift_x, drift_y)
+    diagonal = np.exp(-((Y - (0.74 - 0.20 * X + 0.07 * np.sin(2.5 * X + phase))) / 0.26) ** 2)
+    diagonal *= ellipse(0.48 + 0.09 * math.sin(phase + 1.3), 0.62, 0.54, 0.42)
+    current = np.exp(-((Y - (0.69 + 0.06 * np.sin(4.2 * X + phase))) / 0.23) ** 2) * ellipse(0.5, 0.68, 0.5, 0.4)
 
     light = np.zeros((HEIGHT, WIDTH, 3), dtype=np.float32)
     light[:] = (5.0, 20.0, 29.0)
-    light += low_cloud[..., None] * (8.0, 34.0, 40.0)
-    light += high_cloud[..., None] * (7.0, 28.0, 36.0)
-    light += mid_cloud[..., None] * (2.0, 12.0, 17.0)
+    light += low_cloud[..., None] * (8.0, 37.0, 43.0) * (0.9 + 0.1 * math.cos(phase + 0.4))
+    light += high_cloud[..., None] * (8.0, 33.0, 39.0) * (0.9 + 0.1 * math.sin(phase + 1.1))
+    light += mid_cloud[..., None] * (3.0, 14.0, 18.0)
+    light += diagonal[..., None] * (2.0, 10.0, 12.0)
     light += current[..., None] * (2.0, 9.0, 13.0)
 
     # Soft light sources have distinct paths and depths; their small cores
     # remain luminous without turning into particle effects or hard dots.
     orbs = (
-        (0.80 + 0.045 * math.sin(phase + 0.9), 0.32 + 0.05 * math.cos(phase + 0.9), 0.11, 0.016, (17.0, 71.0, 73.0)),
-        (0.18 + 0.035 * math.sin(phase + 3.2), 0.71 + 0.06 * math.cos(phase + 3.2), 0.10, 0.014, (12.0, 55.0, 59.0)),
-        (0.53 + 0.025 * math.cos(phase + 1.7), 0.19 + 0.035 * math.sin(phase + 1.7), 0.065, 0.012, (6.0, 27.0, 34.0)),
+        (0.79 + 0.12 * math.sin(phase + 0.9), 0.31 + 0.085 * math.cos(phase + 0.9), 0.12, 0.019, (18.0, 71.0, 76.0)),
+        (0.18 + 0.11 * math.sin(phase + 3.2), 0.72 + 0.09 * math.cos(phase + 3.2), 0.11, 0.017, (13.0, 57.0, 61.0)),
+        (0.53 + 0.085 * math.cos(phase + 1.7), 0.19 + 0.07 * math.sin(phase + 1.7), 0.075, 0.014, (7.0, 31.0, 37.0)),
     )
     for cx, cy, halo_width, core_width, color in orbs:
         distance = np.sqrt(((X - cx) * 1.25) ** 2 + (Y - cy) ** 2)
         halo = np.exp(-0.5 * (distance / halo_width) ** 2)
         core = np.exp(-0.5 * (distance / core_width) ** 2)
-        light += (0.45 * halo + 0.95 * core)[..., None] * color
+        light += (0.42 * halo + 0.9 * core)[..., None] * color * (0.94 + 0.06 * math.sin(phase + cx))
 
     # A restrained fixed texture keeps the gradient from looking flat and
     # improves the appearance of 8-bit video compression.
@@ -99,10 +104,10 @@ def main() -> None:
         '-f', 'rawvideo', '-pix_fmt', 'rgb24', '-s:v', f'{WIDTH}x{HEIGHT}',
         '-r', str(FPS), '-i', 'pipe:0', '-an',
         '-filter_complex', '[0:v]split=2[web][mp4]',
-        '-map', '[web]', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '39',
+        '-map', '[web]', '-c:v', 'libvpx-vp9', '-b:v', '0', '-crf', '31',
         '-deadline', 'good', '-cpu-used', '4', '-row-mt', '1', '-pix_fmt', 'yuv420p',
         str(media_dir / 'ambient-teal.webm'),
-        '-map', '[mp4]', '-c:v', 'libx264', '-preset', 'medium', '-crf', '29',
+        '-map', '[mp4]', '-c:v', 'libx264', '-preset', 'medium', '-crf', '23',
         '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
         str(media_dir / 'ambient-teal.mp4'),
     ]
