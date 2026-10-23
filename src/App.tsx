@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { ArrowUpRight, BriefcaseBusiness, Code2, Download } from 'lucide-react'
 import { ContactLead } from './components/ContactLead'
+import { AmbientBackground } from './components/AmbientBackground'
 import { HeroScene } from './components/HeroScene'
 import { GemoraCaseStudy } from './components/GemoraCaseStudy'
 import { Navbar } from './components/Navbar'
@@ -65,6 +66,7 @@ function App() {
 
   return (
     <div className="site-shell" id="top">
+      <AmbientBackground />
       <a className="skip-link" href="#main">Skip to content</a>
       <Navbar />
 

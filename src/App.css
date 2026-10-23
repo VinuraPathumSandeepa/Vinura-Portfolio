@@ -19,7 +19,11 @@
 }
 
 #root { min-height: 100vh; }
-.site-shell { overflow: clip; background: var(--bg); }
+.site-shell { position: relative; isolation: isolate; overflow: clip; background: var(--bg); }
+.ambient-background { position: fixed; z-index: 0; inset: 0; pointer-events: none; overflow: hidden; background: #091820 url('/images/ambient-teal-poster.webp') center / cover no-repeat; }
+.ambient-background-video { display: block; width: 100%; height: 100%; object-fit: cover; opacity: .82; }
+.ambient-background::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(4, 17, 24, .34), rgba(4, 17, 24, .13) 48%, rgba(4, 17, 24, .3)); }
+.site-shell > .page-enter, .site-shell > .footer { position: relative; z-index: 1; }
 .page-enter { animation: page-enter var(--motion-page) ease-out both; }
 @keyframes page-enter { from { opacity: .94; } to { opacity: 1; } }
 .section-shell { width: min(100% - 96px, 1300px); margin-inline: auto; }
@@ -127,9 +131,9 @@
 .section { position: relative; padding-block: clamp(96px, 10vw, 150px); }
 .section--about, .section--projects, .section--education { border-top: 1px solid var(--line); }
 .section--about { background: radial-gradient(ellipse at 74% 0, rgba(133, 221, 198, .045), transparent 46%), #0b1c24; }
-.section--skills { overflow: clip; background: #0b1b24; }
-.section--projects { background: var(--bg); }
-.section--education { background: #0d2028; }
+.section--skills { overflow: clip; background: rgba(11, 27, 36, .9); }
+.section--projects { background: rgba(9, 24, 32, .95); }
+.section--education { background: rgba(13, 32, 40, .86); }
 .section-kicker { margin: 0 0 27px; color: var(--accent); font-size: 11px; font-weight: 650; letter-spacing: .2em; }
 .section-kicker span { margin-right: 7px; color: #d8e4dd; }
 .section-heading h2 { max-width: 660px; margin: 0; font-size: clamp(47px, 5.2vw, 74px); line-height: 1.1; }
@@ -438,7 +442,7 @@
 .education-copy > p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
 .education-footer { display: flex; justify-content: space-between; gap: 20px; margin-top: 35px; padding-top: 19px; border-top: 1px solid var(--line); color: #a9c5bc; font-size: 12px; }
 .education-footer strong { color: var(--text); letter-spacing: .1em; }
-.section--contact { background: radial-gradient(circle at 20% 20%, rgba(33, 89, 86, .23), transparent 34%), #0b1d24; border-top: 1px solid var(--line); }
+.section--contact { background: radial-gradient(circle at 20% 20%, rgba(33, 89, 86, .23), transparent 34%), rgba(11, 29, 36, .82); border-top: 1px solid var(--line); }
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(270px, .65fr); gap: clamp(70px, 10vw, 170px); align-items: center; }
 .section--contact h2 { max-width: 740px; margin: 0; font-size: clamp(55px, 6.1vw, 88px); line-height: 1.07; }
 .contact-title-line { display: block; overflow: hidden; padding-block: .07em; margin-block: -.07em; }
