@@ -151,7 +151,7 @@
 .tech-intro { max-width: 540px; margin: 25px auto 0; color: #a9c2bd; font-size: 15px; line-height: 1.7; }
 .tech-stage { --spot-x: 50%; --spot-y: 50%; --spot-opacity: 0; position: relative; isolation: isolate; min-width: 0; margin-top: clamp(52px, 6vw, 84px); overflow: hidden; padding: 30px clamp(15px, 4vw, 52px) 42px; border-block: 1px solid rgba(133, 221, 198, .14); background: linear-gradient(180deg, #0b1d26 0%, #102a32 49%, #0b1d26 100%); }
 .tech-stage-glow, .tech-stage-grid, .tech-stage-spotlight { position: absolute; z-index: -1; inset: 0; pointer-events: none; }
-.tech-stage-glow { background: radial-gradient(ellipse 58% 66% at 50% 54%, rgba(39, 163, 151, .35) 0%, rgba(32, 105, 107, .21) 43%, transparent 82%), radial-gradient(ellipse 30% 28% at 50% 83%, rgba(80, 206, 186, .13), transparent 85%); }
+.tech-stage-glow { background: radial-gradient(ellipse 58% 66% at 50% 54%, rgba(39, 163, 151, .39) 0%, rgba(32, 105, 107, .23) 43%, transparent 82%), radial-gradient(ellipse 30% 28% at 50% 83%, rgba(80, 206, 186, .13), transparent 85%); }
 .tech-stage-grid { opacity: .58; background: repeating-radial-gradient(ellipse at 50% 57%, transparent 0 69px, rgba(141, 225, 205, .085) 70px, transparent 71px), linear-gradient(rgba(133, 221, 198, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(133, 221, 198, .035) 1px, transparent 1px); background-size: auto, 70px 70px, 70px 70px; mask-image: radial-gradient(ellipse at center, #000 18%, transparent 76%); }
 .tech-stage-spotlight { opacity: var(--spot-opacity); background: radial-gradient(310px circle at var(--spot-x) var(--spot-y), rgba(144, 237, 214, .14), transparent 75%); transition: opacity .25s ease; }
 .tech-stage-meta, .tech-stage-baseline { position: relative; display: flex; justify-content: space-between; gap: 18px; color: #8baba7; font-size: 9px; font-weight: 700; letter-spacing: .18em; }
@@ -166,6 +166,14 @@
 .technology-card[data-icon="mysql"] .technology-icon svg { transform: scale(1.2); }
 .technology-name { position: relative; z-index: 1; color: #e5f0eb; font-size: 13px; font-weight: 650; line-height: 1.2; }
 .technology-category { position: relative; z-index: 1; color: #91b4ad; font-size: 9px; font-weight: 650; letter-spacing: .11em; line-height: 1.25; text-transform: uppercase; }
+@media (min-width: 901px) {
+  .section--skills { padding-block: 70px 82px; }
+  .tech-stage { margin-top: 38px; padding-block: 19px 25px; }
+  .tech-stage-meta { margin-bottom: 17px; }
+  .tech-stage-baseline { margin-top: 19px; }
+  .technology-wall { row-gap: 8px; }
+  .technology-card { min-height: 108px; gap: 7px; padding-block: 12px; }
+}
 @media (hover: hover) and (pointer: fine) {
   .technology-card:hover { border-color: rgba(135, 238, 207, .68); background: rgba(17, 55, 62, .86); box-shadow: 0 18px 34px rgba(1, 16, 22, .26), 0 0 24px rgba(70, 201, 175, .16), inset 0 1px rgba(221, 255, 243, .1); }
   .technology-card:hover::after { opacity: 1; }
@@ -460,7 +468,7 @@ a.social-link:hover { color: var(--accent); }
   .section-shell { width: min(100% - 64px, 1300px); }
   .hero { gap: 45px; grid-template-columns: minmax(0, 1.08fr) minmax(300px, .92fr); }
   .hero h1 { font-size: clamp(56px, 6vw, 75px); }
-  .technology-card { min-height: 120px; }
+  .technology-card { min-height: 108px; }
   .technology-name { font-size: 12px; }
   .about-grid, .education-grid { gap: 55px; }
   .project-card--featured .project-content { padding: 32px; }
