@@ -30,14 +30,20 @@ export function AmbientBackground() {
     if (!video || !canAnimate || videoFailed) return
 
     const visibleSections = new Set<Element>()
+    let skillsVisible = false
     let watchingSections = false
     const syncPlayback = () => {
-      if (document.hidden || (watchingSections && visibleSections.size === 0)) video.pause()
+      if (document.hidden || skillsVisible || (watchingSections && visibleSections.size === 0)) video.pause()
       else void video.play().catch(() => { /* The poster remains visible if autoplay is blocked. */ })
     }
+    // Tech Stack has its own lightweight atmosphere; the global video rests there.
     const sections = document.querySelectorAll('.hero-track, #skills, #education, #contact')
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
       for (const entry of entries) {
+        if (entry.target.id === 'skills') {
+          skillsVisible = entry.isIntersecting
+          continue
+        }
         if (entry.isIntersecting) visibleSections.add(entry.target)
         else visibleSections.delete(entry.target)
       }

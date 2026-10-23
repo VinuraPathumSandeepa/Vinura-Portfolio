@@ -1,4 +1,4 @@
-import type { ComponentType, CSSProperties, PointerEvent } from 'react'
+import { useEffect, useRef, type ComponentType, type CSSProperties, type PointerEvent } from 'react'
 import { Braces, Workflow } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 import { FaCss3Alt, FaJava } from 'react-icons/fa'
@@ -83,6 +83,22 @@ function TechnologyCard({ technology, category, slot, reduceMotion }: {
 
 export function TechStack() {
   const reduceMotion = Boolean(useReducedMotion())
+  const saveData = Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData)
+  const stageRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage || reduceMotion || saveData) return
+    if (!('IntersectionObserver' in window)) {
+      stage.dataset.ambientMotion = 'true'
+      return
+    }
+    const observer = new IntersectionObserver(([entry]) => {
+      stage.dataset.ambientMotion = String(entry.isIntersecting)
+    }, { threshold: 0.05 })
+    observer.observe(stage)
+    return () => observer.disconnect()
+  }, [reduceMotion, saveData])
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (reduceMotion || event.pointerType !== 'mouse') return
@@ -100,7 +116,7 @@ export function TechStack() {
         <p className="tech-intro">The languages, frameworks, platforms, and tools I use in project work.</p>
       </Reveal>
 
-      <div className="tech-stage" onPointerMove={handlePointerMove} onPointerLeave={(event) => event.currentTarget.style.setProperty('--spot-opacity', '0')}>
+      <div ref={stageRef} className="tech-stage" data-ambient-motion="false" onPointerMove={handlePointerMove} onPointerLeave={(event) => event.currentTarget.style.setProperty('--spot-opacity', '0')}>
         <motion.div
           className="tech-stage-glow"
           aria-hidden="true"
@@ -109,6 +125,15 @@ export function TechStack() {
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.72, ease: motionEase }}
         />
+        <div className="tech-atmosphere" aria-hidden="true">
+          <span className="tech-atmosphere-light" />
+          <span className="tech-atmosphere-sphere" />
+          <span className="tech-atmosphere-orbit tech-atmosphere-orbit--outer" />
+          <span className="tech-atmosphere-orbit tech-atmosphere-orbit--inner" />
+          <span className="tech-atmosphere-spark tech-atmosphere-spark--one" />
+          <span className="tech-atmosphere-spark tech-atmosphere-spark--two" />
+          <span className="tech-atmosphere-spark tech-atmosphere-spark--three" />
+        </div>
         <div className="tech-stage-grid" aria-hidden="true" />
         <div className="tech-stage-spotlight" aria-hidden="true" />
         <div className="tech-stage-meta" aria-hidden="true"><span>TECHNOLOGY INDEX</span><span>{technologies.length} TECHNOLOGIES · {String(skillGroups.length).padStart(2, '0')} DISCIPLINES</span></div>
