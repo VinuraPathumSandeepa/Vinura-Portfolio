@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ComponentType, type CSSProperties, type PointerEvent } from 'react'
+import { useEffect, useRef, useState, type ComponentType, type CSSProperties, type PointerEvent } from 'react'
 import { Braces, Workflow } from 'lucide-react'
 import { motion, useReducedMotion } from 'motion/react'
 import { FaCss3Alt, FaJava } from 'react-icons/fa'
@@ -54,6 +54,14 @@ const tileVariants = {
   visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.52, ease: motionEase } },
 }
 
+const stageMotionQuery = '(min-width: 1024px) and (prefers-reduced-motion: no-preference)'
+const stageDataQuery = '(prefers-reduced-data: reduce)'
+
+function stageMotionAllowed() {
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+  return window.matchMedia(stageMotionQuery).matches && !window.matchMedia(stageDataQuery).matches && !connection?.saveData
+}
+
 function TechnologyCard({ technology, category, slot, reduceMotion }: {
   technology: Technology
   category: string
@@ -83,22 +91,51 @@ function TechnologyCard({ technology, category, slot, reduceMotion }: {
 
 export function TechStack() {
   const reduceMotion = Boolean(useReducedMotion())
-  const saveData = Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData)
   const stageRef = useRef<HTMLDivElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [canAnimate, setCanAnimate] = useState(stageMotionAllowed)
+  const [stageVisible, setStageVisible] = useState(false)
+  const [hasEntered, setHasEntered] = useState(false)
+  const [videoFailed, setVideoFailed] = useState(false)
+
+  useEffect(() => {
+    const motion = window.matchMedia(stageMotionQuery)
+    const reducedData = window.matchMedia(stageDataQuery)
+    const update = () => setCanAnimate(stageMotionAllowed())
+    motion.addEventListener('change', update)
+    reducedData.addEventListener('change', update)
+    return () => {
+      motion.removeEventListener('change', update)
+      reducedData.removeEventListener('change', update)
+    }
+  }, [])
 
   useEffect(() => {
     const stage = stageRef.current
-    if (!stage || reduceMotion || saveData) return
-    if (!('IntersectionObserver' in window)) {
-      stage.dataset.ambientMotion = 'true'
-      return
-    }
+    if (!stage) return
+    if (!('IntersectionObserver' in window)) return
     const observer = new IntersectionObserver(([entry]) => {
-      stage.dataset.ambientMotion = String(entry.isIntersecting)
+      setStageVisible(entry.isIntersecting)
+      if (entry.isIntersecting) setHasEntered(true)
     }, { threshold: 0.05 })
     observer.observe(stage)
     return () => observer.disconnect()
-  }, [reduceMotion, saveData])
+  }, [])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !canAnimate || videoFailed) return
+    const syncPlayback = () => {
+      if (!stageVisible || document.hidden) video.pause()
+      else void video.play().catch(() => { /* The matching poster remains visible if autoplay is blocked. */ })
+    }
+    document.addEventListener('visibilitychange', syncPlayback)
+    syncPlayback()
+    return () => {
+      document.removeEventListener('visibilitychange', syncPlayback)
+      video.pause()
+    }
+  }, [canAnimate, stageVisible, hasEntered, videoFailed])
 
   const handlePointerMove = (event: PointerEvent<HTMLDivElement>) => {
     if (reduceMotion || event.pointerType !== 'mouse') return
@@ -116,25 +153,25 @@ export function TechStack() {
         <p className="tech-intro">The languages, frameworks, platforms, and tools I use in project work.</p>
       </Reveal>
 
-      <div ref={stageRef} className="tech-stage" data-ambient-motion="false" onPointerMove={handlePointerMove} onPointerLeave={(event) => event.currentTarget.style.setProperty('--spot-opacity', '0')}>
-        <motion.div
-          className="tech-stage-glow"
-          aria-hidden="true"
-          initial={reduceMotion ? false : { opacity: 0 }}
-          whileInView={reduceMotion ? undefined : { opacity: 1 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.72, ease: motionEase }}
-        />
-        <div className="tech-atmosphere" aria-hidden="true">
-          <span className="tech-atmosphere-light" />
-          <span className="tech-atmosphere-sphere" />
-          <span className="tech-atmosphere-orbit tech-atmosphere-orbit--outer" />
-          <span className="tech-atmosphere-orbit tech-atmosphere-orbit--inner" />
-          <span className="tech-atmosphere-spark tech-atmosphere-spark--one" />
-          <span className="tech-atmosphere-spark tech-atmosphere-spark--two" />
-          <span className="tech-atmosphere-spark tech-atmosphere-spark--three" />
+      <div ref={stageRef} className="tech-stage" onPointerMove={handlePointerMove} onPointerLeave={(event) => event.currentTarget.style.setProperty('--spot-opacity', '0')}>
+        <div className="tech-stage-media" aria-hidden="true">
+          {canAnimate && hasEntered && !videoFailed && (
+            <video
+              ref={videoRef}
+              className="tech-stage-video"
+              muted
+              loop
+              playsInline
+              preload="none"
+              poster="/images/techstack-atmosphere-poster.webp"
+              disablePictureInPicture
+              onError={() => setVideoFailed(true)}
+            >
+              <source src="/media/techstack-atmosphere.webm" type="video/webm" />
+              <source src="/media/techstack-atmosphere.mp4" type="video/mp4" />
+            </video>
+          )}
         </div>
-        <div className="tech-stage-grid" aria-hidden="true" />
         <div className="tech-stage-spotlight" aria-hidden="true" />
         <div className="tech-stage-meta" aria-hidden="true"><span>TECHNOLOGY INDEX</span><span>{technologies.length} TECHNOLOGIES · {String(skillGroups.length).padStart(2, '0')} DISCIPLINES</span></div>
         <motion.ul

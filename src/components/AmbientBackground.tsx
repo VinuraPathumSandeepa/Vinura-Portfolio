@@ -36,8 +36,8 @@ export function AmbientBackground() {
       if (document.hidden || skillsVisible || (watchingSections && visibleSections.size === 0)) video.pause()
       else void video.play().catch(() => { /* The poster remains visible if autoplay is blocked. */ })
     }
-    // Tech Stack has its own lightweight atmosphere; the global video rests there.
-    const sections = document.querySelectorAll('.hero-track, #skills, #education, #contact')
+    // Tech Stack owns the atmosphere while visible; resume the global loop in Projects.
+    const sections = document.querySelectorAll('.hero-track, #skills, #projects, #education, #contact')
     const observer = 'IntersectionObserver' in window ? new IntersectionObserver((entries) => {
       for (const entry of entries) {
         if (entry.target.id === 'skills') {
