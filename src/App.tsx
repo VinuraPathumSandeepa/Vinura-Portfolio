@@ -5,11 +5,11 @@ import { AmbientBackground } from './components/AmbientBackground'
 import { HeroScene } from './components/HeroScene'
 import { GemoraCaseStudy } from './components/GemoraCaseStudy'
 import { Navbar } from './components/Navbar'
-import { ProjectCard } from './components/ProjectCard'
+import { ProjectShowcase } from './components/ProjectShowcase'
 import { Reveal } from './components/Reveal'
 import { SectionHeading } from './components/SectionHeading'
 import { TechStack } from './components/TechStack'
-import { projects, resumeUrl, socialLinks, type SocialLink } from './data/portfolio'
+import { resumeUrl, socialLinks, type SocialLink } from './data/portfolio'
 import './App.css'
 
 const socialIcons = {
@@ -91,12 +91,7 @@ function App() {
           </div>
         </section>
 
-        <section className="section section--projects" id="projects" aria-labelledby="projects-title">
-          <div className="section-shell">
-            <Reveal variant="heading"><div className="projects-heading"><SectionHeading number="03" label="Selected work" title="Ideas, made tangible." id="projects-title" description="Individual and group projects, with my role made clear in each." /><span className="projects-count">SELECTED PROJECTS / {String(projects.length).padStart(2, '0')}</span></div></Reveal>
-            <div className="projects-list">{projects.map((project, index) => <Reveal className={project.wide ? 'project-grid-item--wide' : undefined} key={project.id} delay={0.04 + index * 0.05}><ProjectCard project={project} index={index} /></Reveal>)}</div>
-          </div>
-        </section>
+        <ProjectShowcase />
 
         <section className="section section--education" id="education" aria-labelledby="education-title">
           <div className="section-shell education-grid">

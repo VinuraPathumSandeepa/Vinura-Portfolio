@@ -1,5 +1,5 @@
 import { ArrowRight, ArrowUpRight, Download } from 'lucide-react'
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useReducedMotion, type MotionValue } from 'motion/react'
 import type { Project } from '../data/portfolio'
 import { gemoraScreenshots } from '../data/portfolio'
 import { motionDuration, motionEase } from '../motion'
@@ -13,27 +13,37 @@ function FeaturedVisual() {
   const homepage = gemoraScreenshots[0]
 
   if (available.has(homepage.id)) {
-    return <div className="project-visual project-visual--real"><img src={homepage.src} alt="GemoraAI web homepage" /><span className="visual-note">ACTUAL PROJECT SCREENSHOT</span></div>
+    return <div className="project-visual project-visual--real"><img src={homepage.src} alt="GemoraAI web homepage" loading="lazy" decoding="async" /><span className="visual-note">ACTUAL PROJECT SCREENSHOT</span></div>
   }
 
   return <ProjectVisual variant="gemora" />
 }
 
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
+type ProjectCardProps = {
+  project: Project
+  index: number
+  showcase?: boolean
+  visualClip?: MotionValue<string>
+  contentY?: MotionValue<number>
+  contentOpacity?: MotionValue<number>
+}
+
+export function ProjectCard({ project, index, showcase = false, visualClip, contentY, contentOpacity }: ProjectCardProps) {
   const reduceMotion = useReducedMotion()
 
   return (
     <article className={`project-card ${project.featured ? 'project-card--featured' : ''} ${project.wide ? 'project-card--wide' : ''}`}>
       <motion.div
         className="project-visual-wrap"
-        initial={reduceMotion ? false : { opacity: 0.84, scale: 1.025 }}
-        whileInView={reduceMotion ? undefined : { opacity: 1, scale: 1 }}
+        style={showcase ? { clipPath: visualClip ?? 'inset(0)' } : undefined}
+        initial={showcase || reduceMotion ? false : { opacity: 0.84, scale: 1.025 }}
+        whileInView={showcase || reduceMotion ? undefined : { opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.16 }}
         transition={{ duration: motionDuration.section, delay: 0.08, ease: motionEase }}
       >
         {project.id === 'gemora-ai' ? <FeaturedVisual /> : <ProjectVisual variant={project.visual} />}
       </motion.div>
-      <div className="project-content">
+      <motion.div className="project-content" style={showcase ? { y: contentY ?? 0, opacity: contentOpacity ?? 1 } : undefined}>
         <div className="project-topline">
           <span>0{index + 1} / {project.featured ? 'FEATURED PROJECT' : 'PROJECT'}</span>
           {project.type && <span className="project-type">{project.type}</span>}
@@ -63,7 +73,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
             </div>
           )}
         </div>
-      </div>
+      </motion.div>
     </article>
   )
 }
