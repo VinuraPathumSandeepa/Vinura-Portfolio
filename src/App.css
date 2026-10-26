@@ -241,9 +241,13 @@
   .project-showcase--cinematic .project-showcase-footer { display: flex; min-height: 27px; }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .project-showcase .projects-track { grid-template-columns: 1fr; margin-top: 36px; }
   .project-showcase .project-showcase-panel:first-child, .project-showcase .project-showcase-panel:nth-child(2) { grid-column: auto; }
+  .project-showcase .project-card--featured, .project-showcase .project-card--wide { display: block; min-height: 0; }
+  .project-showcase .project-card--featured .project-visual { height: 360px; min-height: 0; }
+  .project-showcase .project-card--wide .project-visual { height: 320px; min-height: 0; }
+  .project-showcase .project-card--featured .project-content { min-height: 0; }
 }
 .project-card { position: relative; height: 100%; overflow: hidden; border: 1px solid var(--line); background: #10232b; transition: border-color var(--motion-card) ease, transform var(--motion-card) var(--motion-ease), box-shadow var(--motion-card) ease; }
 .project-card::before { content: ""; position: absolute; z-index: 6; inset: 0 0 auto; height: 2px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform var(--motion-card) var(--motion-ease); }
@@ -599,6 +603,9 @@ a.social-link:hover { color: var(--accent); }
 
 @media (max-width: 520px) {
   .section-shell { width: min(100% - 36px, 480px); }
+  .project-showcase .project-card--featured .project-visual { height: 260px; }
+  .project-showcase .project-card--featured .project-visual--real { height: auto; aspect-ratio: 1888 / 1023; }
+  .project-showcase .project-card--wide .project-visual { height: 260px; }
   .hero { gap: 55px; padding-top: 62px; }
   .eyebrow { margin-bottom: 23px; font-size: 10px; }
   .hero h1 { font-size: clamp(48px, 11.7vw, 62px); }
