@@ -5,7 +5,7 @@ import { projects, type Project } from '../data/portfolio'
 import { ProjectCard } from './ProjectCard'
 import { SectionHeading } from './SectionHeading'
 
-const cinematicQuery = '(min-width: 1101px) and (min-height: 850px) and (prefers-reduced-motion: no-preference)'
+const cinematicQuery = '(min-width: 1200px) and (min-height: 740px) and (prefers-reduced-motion: no-preference)'
 
 function useCinematicLayout() {
   const [enabled, setEnabled] = useState(() => window.matchMedia(cinematicQuery).matches)
