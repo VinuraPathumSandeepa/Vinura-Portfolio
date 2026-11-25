@@ -4,6 +4,7 @@ import { ContactLead } from './components/ContactLead'
 import { AmbientBackground } from './components/AmbientBackground'
 import { HeroScene } from './components/HeroScene'
 import { GemoraCaseStudy } from './components/GemoraCaseStudy'
+import { SkylinkCaseStudy } from './components/SkylinkCaseStudy'
 import { Navbar } from './components/Navbar'
 import { ProjectShowcase } from './components/ProjectShowcase'
 import { Reveal } from './components/Reveal'
@@ -20,7 +21,7 @@ const socialIcons = {
 
 const currentYear = new Date().getFullYear()
 const hasSocialLinks = socialLinks.some((social) => Boolean(social.url))
-const isGemoraCaseStudy = new URLSearchParams(window.location.search).get('case-study') === 'gemora-ai'
+const caseStudy = new URLSearchParams(window.location.search).get('case-study')
 
 function Footer({ fromCaseStudy = false }: { fromCaseStudy?: boolean }) {
   const topHref = fromCaseStudy ? '/#top' : '#top'
@@ -43,7 +44,7 @@ function SocialItem({ social }: { social: SocialLink }) {
 
 function App() {
   useEffect(() => {
-    if (isGemoraCaseStudy) return
+    if (caseStudy === 'gemora-ai' || caseStudy === 'skylink') return
     // On a fresh deep link, the browser sees the hash before React has mounted its target.
     const frame = window.requestAnimationFrame(() => {
       const id = window.location.hash.slice(1)
@@ -53,12 +54,12 @@ function App() {
     return () => window.cancelAnimationFrame(frame)
   }, [])
 
-  if (isGemoraCaseStudy) {
+  if (caseStudy === 'gemora-ai' || caseStudy === 'skylink') {
     return (
       <div className="site-shell" id="top">
         <a className="skip-link" href="#main">Skip to content</a>
         <Navbar fromCaseStudy />
-        <main id="main" className="page-enter"><GemoraCaseStudy /></main>
+        <main id="main" className="page-enter">{caseStudy === 'gemora-ai' ? <GemoraCaseStudy /> : <SkylinkCaseStudy />}</main>
         <Footer fromCaseStudy />
       </div>
     )

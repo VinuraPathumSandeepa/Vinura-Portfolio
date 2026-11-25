@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ArrowRight, ArrowUpRight, Download } from 'lucide-react'
 import { motion, useReducedMotion, type MotionValue } from 'motion/react'
 import type { Project } from '../data/portfolio'
@@ -17,6 +18,14 @@ function FeaturedVisual() {
   }
 
   return <ProjectVisual variant="gemora" />
+}
+
+function SkylinkVisual() {
+  const [failed, setFailed] = useState(false)
+
+  if (failed) return <div className="project-visual project-visual--skylink-fallback" role="img" aria-label="Skylink screenshot unavailable"><span>SKYLINK</span><small>Application screenshot unavailable</small></div>
+
+  return <div className="project-visual project-visual--real project-visual--skylink"><img src="/images/projects/skylink/01-skylink-home.webp" alt="Real Skylink homepage with flight search" loading="lazy" decoding="async" onError={() => setFailed(true)} /><span className="visual-note">ACTUAL PROJECT SCREENSHOT</span></div>
 }
 
 type ProjectCardProps = {
@@ -41,7 +50,7 @@ export function ProjectCard({ project, index, showcase = false, visualClip, cont
         viewport={{ once: true, amount: 0.16 }}
         transition={{ duration: motionDuration.section, delay: 0.08, ease: motionEase }}
       >
-        {project.id === 'gemora-ai' ? <FeaturedVisual /> : <ProjectVisual variant={project.visual} />}
+        {project.id === 'gemora-ai' ? <FeaturedVisual /> : project.id === 'airline-reservation' ? <SkylinkVisual /> : <ProjectVisual variant={project.visual} />}
       </motion.div>
       <motion.div className="project-content" style={showcase ? { y: contentY ?? 0, opacity: contentOpacity ?? 1 } : undefined}>
         <div className="project-topline">
@@ -63,7 +72,7 @@ export function ProjectCard({ project, index, showcase = false, visualClip, cont
           )}
         </div>
         <div className="project-bottom">
-          <ul className="tech-list" aria-label="Technologies used">{project.technologies.map((tech) => <li key={tech}>{tech}</li>)}</ul>
+          <ul className="tech-list" aria-label="Technologies used">{(project.id === 'airline-reservation' ? project.technologies.slice(0, 5) : project.technologies).map((tech) => <li key={tech}>{tech}</li>)}</ul>
           {(project.repositoryUrl || project.demoUrl || project.apkUrl || project.caseStudyUrl) && (
             <div className="project-actions">
               {project.caseStudyUrl && <a className="project-link project-link--case-study" href={project.caseStudyUrl}>View case study <ArrowRight size={15} aria-hidden="true" /></a>}

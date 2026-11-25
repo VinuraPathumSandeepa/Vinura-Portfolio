@@ -77,16 +77,60 @@ export const projects: Project[] = [
   },
   {
     id: 'airline-reservation',
-    title: 'Airline Ticket Reservation System',
-    summary: 'A ticket reservation system with frontend interfaces, a REST API backend, and Admin/Traveler dashboards.',
+    title: 'Skylink',
+    subtitle: 'Airline Ticket Reservation System',
+    type: 'Group Project',
+    summary: 'A collaborative airline reservation application for flight discovery, passenger booking, and payment submission.',
     details: [
-      'Implemented ticket booking CRUD operations and payment management workflows.',
+      'The wider team built the traveler experience and reservation management.',
+      'In the documented demo, payment and booking remain pending finance review.',
     ],
-    technologies: ['HTML5', 'CSS3', 'JavaScript', 'Spring Boot'],
-    repositoryUrl: null,
+    contribution: 'Developed the Booking and Payment modules, including the multi-step booking flow, checkout, and post-submission status.',
+    technologies: ['Java 17', 'Spring Boot', 'Spring Security', 'Hibernate/JPA', 'Thymeleaf', 'JavaScript', 'CSS', 'Bootstrap', 'MySQL 8'],
+    repositoryUrl: 'https://github.com/MalinduPeiris/Skylink-Airline-Reservation-System',
     demoUrl: null,
+    caseStudyUrl: '/?case-study=skylink',
     visual: 'airline',
   },
+]
+
+export type SkylinkScreenshotGroup = 'discovery' | 'booking' | 'payment'
+
+export type SkylinkScreenshot = {
+  id: string
+  src: string
+  original: string
+  title: string
+  caption: string
+  alt: string
+  group: SkylinkScreenshotGroup
+  position?: string
+}
+
+export const skylinkScreenshotGroups: { id: SkylinkScreenshotGroup; title: string; description: string }[] = [
+  { id: 'discovery', title: 'Flight discovery', description: 'The team-built traveler entry and flight search journey.' },
+  { id: 'booking', title: 'Booking module', description: 'Passenger details, selected extras, and itinerary review from my Booking work.' },
+  { id: 'payment', title: 'Payment module', description: 'My checkout and post-submission experience, with finance review still pending.' },
+]
+
+// Captured from the real application with isolated fictional demo data.
+// Optimized previews retain the original PNGs for full-size inspection.
+export const skylinkScreenshots = [
+  { id: 'home', src: '/images/projects/skylink/01-skylink-home.webp', original: '/images/projects/skylink/01-skylink-home.png', title: 'Skylink homepage', caption: 'The traveler entry point and flight discovery.', alt: 'Skylink homepage with aircraft hero and flight search form', group: 'discovery' },
+  { id: 'flight-search', src: '/images/projects/skylink/02-skylink-flight-search.webp', original: '/images/projects/skylink/02-skylink-flight-search.png', title: 'Flight search', caption: 'A fictional Colombo to Singapore search with date, party size, and cabin class.', alt: 'Skylink flight search form populated for a Colombo to Singapore journey', group: 'discovery' },
+  { id: 'available-flights', src: '/images/projects/skylink/03-skylink-available-flights.webp', original: '/images/projects/skylink/03-skylink-available-flights.png', title: 'Available flights', caption: 'The fictional SL101 flight result shows route, cabin, seats, and fare.', alt: 'Skylink available flights result for fictional flight SL101', group: 'discovery' },
+  { id: 'passenger-booking', src: '/images/projects/skylink/04-skylink-passenger-booking.webp', original: '/images/projects/skylink/04-skylink-passenger-booking.png', title: 'Passenger booking', caption: 'My Booking module combines a structured passenger form with a live fare summary.', alt: 'Skylink passenger booking form with progress steps and booking summary', group: 'booking', position: 'center top' },
+  { id: 'booking-review', src: '/images/projects/skylink/05-skylink-booking-review.webp', original: '/images/projects/skylink/05-skylink-booking-review.png', title: 'Booking review', caption: 'The traveler reviews itinerary, passenger details, extras, and subtotal before payment.', alt: 'Skylink booking review screen with passenger details and selected extras', group: 'booking', position: 'center top' },
+  { id: 'payment-checkout', src: '/images/projects/skylink/06-skylink-payment-checkout.webp', original: '/images/projects/skylink/06-skylink-payment-checkout.png', title: 'Payment checkout', caption: 'My Payment module separates the booking subtotal from the processing fee; the card fields shown are empty.', alt: 'Skylink payment checkout with empty card fields and fare breakdown', group: 'payment', position: 'center top' },
+  { id: 'booking-status', src: '/images/projects/skylink/07-skylink-booking-status.webp', original: '/images/projects/skylink/07-skylink-booking-status.png', title: 'Pending booking status', caption: 'A fictional eZ Cash submission is acknowledged; payment and booking remain pending finance review.', alt: 'Skylink post-submission page showing pending payment and booking status', group: 'payment', position: 'center top' },
+] satisfies SkylinkScreenshot[]
+
+export const skylinkWorkflow = [
+  { title: 'Flight discovery', screenshotId: 'available-flights', description: 'The traveler filters the fictional Colombo to Singapore route and selects flight SL101.', contribution: null },
+  { title: 'Passenger booking', screenshotId: 'passenger-booking', description: 'The multi-step Booking flow collects passenger details and presents the selected fare.', contribution: 'My Booking module: passenger forms, reservation operations, and fare presentation.' },
+  { title: 'Booking review', screenshotId: 'booking-review', description: 'A review step brings itinerary, selected extras, and the LKR 48,500 subtotal together before checkout.', contribution: 'My Booking module: review and selected-extras presentation.' },
+  { title: 'Payment checkout', screenshotId: 'payment-checkout', description: 'The checkout shows card and eZ Cash options, an LKR 45 processing fee, and LKR 48,545 to submit. The captured card form is empty.', contribution: 'My Payment module: checkout interface, payment options, and fee breakdown.' },
+  { title: 'Submission and pending status', screenshotId: 'booking-status', description: 'The fictional eZ Cash submission created pending payment and booking records for finance review; no ticket was issued.', contribution: 'My Payment module: post-submission confirmation and pending status.' },
 ]
 
 export type GemoraScreenshotGroup = 'buyer' | 'seller' | 'verification' | 'mobile'

@@ -349,6 +349,11 @@
 .project-link--case-study:hover { background: var(--accent-strong); }
 .project-visual--real { background: #0c232b; }
 .project-visual--real img { display: block; width: 100%; height: 100%; object-fit: contain; transition: transform var(--motion-image) var(--motion-ease); }
+.project-visual--skylink img { object-fit: cover; object-position: center 43%; }
+.project-visual--skylink .visual-note { padding: 7px 9px; border: 1px solid rgba(133, 221, 198, .3); color: #deeee7; background: rgba(8, 25, 31, .9); }
+.project-visual--skylink-fallback { flex-direction: column; gap: 12px; color: var(--accent); background: #102b39; }
+.project-visual--skylink-fallback span { font-family: var(--serif); font-size: clamp(36px, 4vw, 60px); }
+.project-visual--skylink-fallback small { color: var(--muted); font-size: 12px; }
 
 /* GemoraAI case study */
 .case-study { background: var(--bg); }
