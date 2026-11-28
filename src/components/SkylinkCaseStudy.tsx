@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, ImageOf
 import { motion, useReducedMotion } from 'motion/react'
 import { projects, skylinkScreenshotGroups, skylinkScreenshots, skylinkWorkflow, type SkylinkScreenshot } from '../data/portfolio'
 import { Reveal } from './Reveal'
+import { setCaseStudyMetadata } from '../seo'
 import './SkylinkCaseStudy.css'
 
 const project = projects.find((item) => item.id === 'airline-reservation')!
@@ -51,10 +52,7 @@ export function SkylinkCaseStudy() {
   const selectedImage = previewIndex === null ? null : galleryImages[previewIndex]
 
   useEffect(() => {
-    document.title = 'Skylink Case Study | Vinura Pathum Sandeepa'
-    document.querySelector('meta[name="description"]')?.setAttribute('content', 'Explore Vinura Pathum Sandeepa’s Booking and Payment work in Skylink, a collaborative airline reservation project, through real application screenshots.')
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'Skylink Case Study | Vinura Pathum Sandeepa')
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', 'A documented Skylink booking and payment journey with verified group project contributions and genuine screenshots.')
+    setCaseStudyMetadata('skylink')
   }, [])
 
   useEffect(() => {

@@ -4,6 +4,7 @@ import { gemoraScreenshotGroups, gemoraScreenshots, projects, type GemoraScreens
 import { ProjectVisual } from './ProjectVisual'
 import { Reveal } from './Reveal'
 import { useGemoraScreenshots } from './useGemoraScreenshots'
+import { setCaseStudyMetadata } from '../seo'
 
 const project = projects.find((item) => item.id === 'gemora-ai')!
 
@@ -59,10 +60,7 @@ export function GemoraCaseStudy() {
   }
 
   useEffect(() => {
-    document.title = 'GemoraAI Case Study | Vinura Pathum Sandeepa'
-    document.querySelector('meta[name="description"]')?.setAttribute('content', 'A case study of GemoraAI, a group-built AI-assisted gemstone marketplace, with Vinura Pathum Sandeepa’s seller-facing React and Flutter contributions.')
-    document.querySelector('meta[property="og:title"]')?.setAttribute('content', 'GemoraAI Case Study | Vinura Pathum Sandeepa')
-    document.querySelector('meta[property="og:description"]')?.setAttribute('content', 'Explore the GemoraAI group project, its verified technologies, and Vinura Pathum Sandeepa’s seller-facing contributions.')
+    setCaseStudyMetadata('gemora-ai')
   }, [])
 
   return (

@@ -32,4 +32,12 @@ The case study is available at `/?case-study=gemora-ai`. Its query-based URL wor
 
 The 11 genuine screenshots are stored in `public/images/projects/gemora/` and configured in `src/data/portfolio.ts`. The gallery groups them into Buyer Web Experience (`homepage.png`, `web-buyer-dashboard.png`, `web-buyer-featured-gems.png`, `web-buyer-marketplace.png`), Seller Web Experience (`seller-dashboard.png`, `seller-my-listings.png`), Gemologist Verification & AI Analysis (`gemologist-verification.png`, `ai-analysis.png`), and Flutter Mobile Application (`mobile-marketplace.png`, `mobile-guest-home.png`, `mobile-splash.png`). Missing files are omitted without showing broken images. Other projects retain their illustrative concept visuals.
 
-The Android download uses the existing `public/downloads/GemoraAI.apk`. Its roughly 74.5 MiB size increases repository and deployment transfers. If a Git host or deployment service has size constraints, hosting the APK in GitHub Releases and configuring a verified download URL is an option.
+The Android download uses the verified GitHub Release asset URL configured in `src/data/portfolio.ts`. The original local APK remains ignored by Git.
+
+## Search visibility
+
+`public/robots.txt` allows crawling and points to `public/sitemap.xml`. The sitemap lists the homepage and both directly accessible case studies. Vite serves the same initial HTML for all three URLs; React renders route-specific content and sets each page's canonical URL after loading. The homepage includes Person, ProfilePage, and WebSite structured data. Search indexing depends on Google's crawl and render decisions and must be checked in Search Console.
+
+To verify ownership, create a **URL-prefix** property for `https://vinura-portfolio-lyart.vercel.app/` in Google Search Console. When Google supplies an HTML verification file, place that exact file in `public/`, deploy it, confirm it loads at the site root, then click Verify. Alternatively, add Google's exact verification meta tag to `index.html`, deploy, and verify. Keep the file or tag in place. Do not add a placeholder verification token.
+
+After verification, submit `https://vinura-portfolio-lyart.vercel.app/sitemap.xml` in Search Console's Sitemaps section. Use URL Inspection to test the homepage and both case-study URLs, inspect their rendered HTML and selected canonicals, and request indexing if appropriate.

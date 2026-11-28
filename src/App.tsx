@@ -11,6 +11,7 @@ import { Reveal } from './components/Reveal'
 import { SectionHeading } from './components/SectionHeading'
 import { TechStack } from './components/TechStack'
 import { resumeUrl, socialLinks, type SocialLink } from './data/portfolio'
+import { setHomepageCanonical } from './seo'
 import './App.css'
 
 const socialIcons = {
@@ -43,6 +44,10 @@ function SocialItem({ social }: { social: SocialLink }) {
 }
 
 function App() {
+  useEffect(() => {
+    if (caseStudy !== 'gemora-ai' && caseStudy !== 'skylink') setHomepageCanonical()
+  }, [])
+
   useEffect(() => {
     if (caseStudy === 'gemora-ai' || caseStudy === 'skylink') return
     // On a fresh deep link, the browser sees the hash before React has mounted its target.
